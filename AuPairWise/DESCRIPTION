@@ -1,11 +1,11 @@
 Package: AuPairWise
 Title: Estimate RNA-Seq Replicability
 Version: 0.0.0.9000
-Authors@R: 
-    person("Sara", "Ballouz", , "s.ballouz@garvan.org.au", role = c("aut", "cre"))
-    person("Amy", "Xu", , "a.q.xu@unsw.edu.au", role = c("ctb""))
-    person("Sascha", "Graham", , "sascha.graham@unsw.edu.au", role = c("ctb""))
-    person("Marcus", "Sammut", , "marcus.sammute@unsw.edu.au", role = c("ctb""))
+Authors@R: c(
+    person("Sara", "Ballouz", email="s.ballouz@garvan.org.au", role = c("aut", "cre")),
+    person("Amy", "Xu", email="a.q.xu@unsw.edu.au", role = "ctb"),
+    person("Sascha", "Graham", email="sascha.graham@unsw.edu.au", role = "ctb"),
+    person("Marcus", "Sammut", email="marcus.sammute@unsw.edu.au", role = "ctb"))
 Description: AuPairWise is a tool to estimate how replicable your expression experiment/study is 
     without using explicit replicates. It uses a noise model to peturb a sample in your expression data, 
     and then tests how this has affected the co-expression of gene pairs that are known to be coexpressed.
@@ -17,8 +17,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Imports: 
   MASS,
-  matrix,
+  Matrix,
   scales,
-  ggplot2,
   gplots,
   zoo,
