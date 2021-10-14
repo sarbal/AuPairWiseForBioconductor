@@ -11,7 +11,24 @@
 ##  Modified: September 2nd 2015
 ## 	- Updated output to return summary variable
 
-
+#' Run AuPairWise
+#'
+#' This function runs AuPairWise.
+#' It calculates the average AUROC for the expression matrix
+#' with different noise factors and outputs results into an Rdata file.
+#' The noise factors and the number of repeats can be changed in the function parameters.
+#'
+#' @param expr expression matrix the be assessed
+#' @param out path for summary to be outputted
+#' @param stoic.pairs co-expressed genes used to calculate AUROC
+#' @param n.factors increment of noise factors
+#' @param n.repeats number of repeats
+#' @param dist dist
+#' @param mode mode
+#' @param ranked boolean of whether data is ranked
+#' @param label.default label for the stoic pairs
+#' @return summary of results
+#' @export
 run_APW <- function(exprs, out, stoich.pairs,  n.factors=c(0,1,2,5,10,15,20,25,50,100), n.repeats=10, dist ="other", mode ="post" , ranked=FALSE, labels.default="Stoichiometric pairs" ){
 
   # Filter data
