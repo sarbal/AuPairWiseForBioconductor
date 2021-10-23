@@ -9,7 +9,7 @@ get_approx_expression <- function( temp.x, temp.x.r, temp.x.s, max.r, min.r)
     x0 = max.r-1
     x1 = max.r
     xn = max.r
-    
+
   }  else {
     x0 = floor(temp.x.s)
     x1 = ceiling(temp.x.s)
@@ -27,7 +27,7 @@ get_replicability <- function( data, AUROC ){
   max.pred = max(which(predictions <= AUROC))
   min.pred = min(which(predictions >= AUROC))
   n.pred = get_value_x( max.pred, min.pred, predictions[max.pred], predictions[min.pred], AUROC)
-  
+
   plot(log10(1:100), predictions, ylim=c(0.4,1), type="l", lwd=3, col="lightgrey", xlab="Noise factor", ylab="AUROC", axes=F)
   axis(2)
   axis(1, lab=data$n.factors, at=log10(data$n.factors) )
@@ -36,9 +36,9 @@ get_replicability <- function( data, AUROC ){
   abline( h = AUROC, lwd=3, lty=3, col=2)
   abline( v = log10(n.pred), lwd=3, lty=3, col=2)
   segments( log10(data$n.factors), data$aurocs-data$aurocs.se, log10(data$n.factors), data$aurocs+data$aurocs.se)
-  
+
   return(n.pred)
-  
+
 }
 
 ##########################################
@@ -46,25 +46,25 @@ get_indices_stoich_pairs <- function( stoich.pairs, genes.list )
 {
   if( missing(stoich.pairs) ){ }
   if( missing(genes.list)  ) { }
-  
+
   m = match( stoich.pairs[,1], genes.list )
   p1 = !is.na(m)
   x1 = m[p1]
-  
+
   m = match( stoich.pairs[p1,2], genes.list )
   p2 = !is.na(m)
   x2 = m[p2]
-  
+
   m = match( stoich.pairs[p1,1][p2], genes.list )
   p3 = !is.na(m)
   x1 = m[p3]
-  
+
   indices = list()
   indices$p1 = p1
   indices$p2 = p2
   indices$x1 = x1
   indices$x2 = x2
-  
+
   return (indices)
 }
 
@@ -88,7 +88,7 @@ get_value <- function( x1, x2, y1,y2, x) {
 # Given y and two points
 get_value_x <- function( x1, x2, y1,y2, y) {
   m = (y2 - y1) / (x2 - x1 )
-  x = x1 + (y - y1)/m 
+  x = x1 + (y - y1)/m
   return(x)
 }
 
@@ -98,7 +98,7 @@ get_density <- function(hist)
   x = sort(rep(hist$breaks,2))
   y = matrix(rbind(hist$density, hist$density))
   y = c(0,y,0)
-  
+
   return(cbind(x,y))
 }
 
@@ -109,7 +109,7 @@ get_counts <- function(hist)
   x = sort(rep(hist$breaks,2))
   y = matrix(rbind(hist$counts, hist$counts))
   y = c(0,y,0)
-  
+
   return(cbind(x,y))
 }
 
@@ -127,7 +127,7 @@ get_roc_curve <- function(scores,labels){
 
 ##########################################
 get_avgroc_curve <- function( rocs,n.repeats, n){
-  
+
   sum = matrix(0, ncol=2, nrow = n)
   colnames(sum) = c("tpr", "fpr")
   for( i in 1:n.repeats) {
@@ -141,13 +141,13 @@ get_avgroc_curve <- function( rocs,n.repeats, n){
 ##########################################
 get_auc <- function(x,y){
   o = order(x)
-  auc <- sum(diff(x[o])*rollmean(y[o],2))
+  auc <- sum(diff(x[o])*zoo::rollmean(y[o],2))
   return (auc)
 }
 
 ##########################################
 get_expression_levels <- function( indices, X, fx){
-  
+
   if( missing(fx) ){
     xp1 = X[indices$x1,]
     xp2 = X[indices$x2,]
