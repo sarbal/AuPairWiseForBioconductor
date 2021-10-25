@@ -35,7 +35,8 @@ calc_auroc <- function(n.factors, n.repeats, pairs, NN, nS, X, k, nK, filter, le
   results.all = list()
   r = 1
   for (n.factor in n.factors) {
-    tic()
+    # tic breaks with updated packages SG
+    # tic()
     repeats = list()
     print(paste("Noise factor: ", n.factor))
     shuff = sample(nS, n.repeats, replace=T)
@@ -62,7 +63,8 @@ calc_auroc <- function(n.factors, n.repeats, pairs, NN, nS, X, k, nK, filter, le
     # Store results
     results.all[[r]]= repeats
     r = r + 1
-    toc()
+    # removed since tic isn't working with new packages SG
+    # toc()
   }
   return (results.all)
 }
