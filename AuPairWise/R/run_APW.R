@@ -94,10 +94,10 @@ run_APW <- function(exprs, out, stoich.pairs,  n.factors=c(0,1,2,5,10,15,20,25,5
   # plot_stoich_cors(out, length, filter, pairs, X)
 
   # Calculate AUROCs for each noise factor, using each pair set
-  calc_auroc(n.factors, n.repeats, pairs, NN, nS, X, k, nK, filter, length)
+  results = calc_auroc(n.factors, n.repeats, pairs, NN, nS, X, k, nK, filter, length)
 
   # Summary results
-  summary = write_out_summary(out, results.all, length, pairs, n.factors, n.repeats)
+  summary = write_out_summary(out, results, length, pairs, n.factors, n.repeats)
 
   return( summary )
 

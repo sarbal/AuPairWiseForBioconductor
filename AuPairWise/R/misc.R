@@ -7,13 +7,6 @@ lm.studentized  <- function(x,y)
 }
 
 ##########################################
-lm.function  <- function(x,y)
-{
-  z = lm(y ~ x )
-  return( rank(abs(z$residuals)) )
-}
-
-##########################################
 model.fx <- function(x, fx)
 {
   x = fx(x)
