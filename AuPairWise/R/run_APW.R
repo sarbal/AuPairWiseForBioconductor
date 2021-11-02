@@ -29,7 +29,9 @@
 #' @param label.default label for the stoic pairs
 #' @return summary of results
 #' @export
-run_APW <- function(exprs, out, stoich.pairs,  n.factors=c(0,1,2,5,10,15,20,25,50,100), n.repeats=10, dist ="other", mode ="post" , ranked=FALSE, labels.default="Stoichiometric pairs" ){
+run_APW <- function(exprs, out, stoich.pairs,  n.factors=c(0,1,5,10,20,50,100), n.repeats=3, dist ="other", mode ="post" , ranked=FALSE, labels.default="Stoichiometric pairs" ){
+
+  # default factors: (0,1,2,5,10,15,20,25,50,100) 30/10 SG
 
   # Filter data
   X = exprs
@@ -94,13 +96,18 @@ run_APW <- function(exprs, out, stoich.pairs,  n.factors=c(0,1,2,5,10,15,20,25,5
   # plot_stoich_cors(out, length, filter, pairs, X)
 
   # Calculate AUROCs for each noise factor, using each pair set
-  results = calc_auroc(n.factors, n.repeats, pairs, NN, nS, X, k, nK, filter, length)
+  # results.all = calc_auroc(n.factors, n.repeats, pairs, NN, nS, X, k, nK, filter, length)
+  results.all = list()
+  r = 1
+  for (n.factor in n.factors) {
+    results.all[[r]]= run_factor(n.factor, n.repeats, pairs, NN, nS, X, k, nK, filter, length)
+    r = r + 1
+  }
 
   # Summary results
-  summary = write_out_summary(out, results, length, pairs, n.factors, n.repeats)
+  summary = write_out_summary(out, results.all, length, pairs, n.factors, n.repeats)
 
   return( summary )
-
 }
 
 

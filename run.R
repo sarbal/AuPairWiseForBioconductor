@@ -12,4 +12,4 @@ load(paste(masterdir,"/SampleData/pairs.Rdata",sep=""))
 # Setting output directory
 out = paste(masterdir,"/Output/results",sep="")
 
-summary = run_APW(exprs, out, stoich.pairs, n.repeats=3)
+summary = run_APW(exprs, out, stoich.pairs, n.factors=c(0,1), n.repeats=3)
