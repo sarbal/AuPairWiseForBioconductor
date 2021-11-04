@@ -1,5 +1,5 @@
 ##########################################
-plot_cummulative_counts <- function(out, X)
+plot_cummulative_counts <- function(X, out)
 {
 
   xN    = dim(X)[2]

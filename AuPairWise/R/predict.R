@@ -2,7 +2,7 @@
 predict_sample <- function( X, s,n.factor, k, nS, nK, filter, dist="other", mode="post" ){
 
   nX = dim(X)[1]
-  X.new  = shuffle(X,s, n.factor, dist,mode)
+  X.new  = Biobase::esApply(X, 1, shuffle, s, n.factor, dist,mode)
   X.r    = t(apply (X.new,1,rank, ties.method="average", na.last="keep") )
   Z.ranks = t(sapply( 1:nK, function(i) lm.studentized( X.r[k[i,1],],X.r[k[i,2],]), simplify=T ))
 

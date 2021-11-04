@@ -37,11 +37,11 @@ run_APW <- function(exprs, out, stoich.pairs,  n.factors=c(0,1,5,10,20,50,100), 
   X = exprs
 
   # Remove samples with no expression data
-  filterout = colSums(X) != 0
-  X = X[,filterout]
+  # filterout = colSums(X) != 0
+  # X = X[,filterout]
 
   # Remove genes with too few counts
-  X[which( log10(X) < -5 )] = 0
+  # X[which( Biobase::esApply(X, 1, log10) < -5 )] = 0
 
   # Set up variables
   NN = dim(X)[2]    		# Number of samples
@@ -50,24 +50,24 @@ run_APW <- function(exprs, out, stoich.pairs,  n.factors=c(0,1,5,10,20,50,100), 
   nS = NN               # If subsampling, currently not implemented
 
   # Visualize data so far
-  plot_cummulative_counts(out, X)
+  Biobase::esApply(X, 1, plot_cummulative_counts, out = out)
 
   # Transform to log2
-  Med <- median(X, na.rm = T)
-  if (Med > 16) X <- model.fx(X, log2)
+  Med <- Biobase::esApply(X, 1, median, na.rm = T)
+  if (Med > 16) { X = Biobase::esApply( X, 1, model.fx, fx=log2) }
 
   # Transform data
   if( ranked == T){
-    X = apply(X, 2 ,rank, ties.method="average", na.last="keep")
+    X = Biobase::esApply(X, 1 ,rank, ties.method="average", na.last="keep")
     colnames(X) = samples.list
     rownames(X) = genes.list
     out=paste(out, "ranked", sep=".")
-    plot_cummulative_counts(out, X)
+    Biobase::esApply(X, 1, plot_cummulative_counts, out=out)
   }
 
   # Properties of expression dataset
-  m.X = rowMeans(X, na.rm=T) 	# Mean expression of genes/transcripts across samples
-  sd.X = apply(X,1,sd, na.rm=T)	# SD of genes/transcripts expression across samples
+  m.X = Biobase::esApply(X, rowMeans, na.rm=T) 	# Mean expression of genes/transcripts across samples
+  sd.X = Biobase::esApply(X,1, sd, na.rm=T)	# SD of genes/transcripts expression across samples
   plot_expression_props(out, m.X, sd.X)
 
   # Update data
