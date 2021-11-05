@@ -50,7 +50,7 @@ run_factor <- function(n.factor, n.repeats, pairs, NN, nS, X, k, nK, filter, len
 
   # print(temp[i,], temp[i+1,])
 
-  repeats$stats = sapply( ((1:length)*2)-1, function(i) wilcox.test( temp[i,],temp[i+1,])$p.val )
+  repeats$stats = sapply( ((1:length)*2)-1, function(i) wilcox.test( temp[i,],temp[i+1,], exact=FALSE)$p.val )
   # Write out results
   # write.table( temp, file=paste(out, ".sample.", nS, ".noise.", n.factor,".avg.aurocs", sep=""), col.names=F)
   # write.table( matrix( unlist(repeats$avgroc), nrow=nS+1, ncol=length*2, byrow=F), file=paste(out, ".sample.", nS, ".noise.", n.factor,".avg.aurocs.fpr.tpr", sep=""), col.names=F)

@@ -17,5 +17,4 @@ out = paste(masterdir,"/Output/results",sep="")
 # generate an expression set with sample data
 minimalExpressionSet <- ExpressionSet(assayData=exprs)
 
-summary = run_APW(minimalExpressionSet, out, stoich.pairs, n.factors=c(0,1), n.repeats=3)
-
+summary = run_APW(minimalExpressionSet, out, stoich.pairs, n.factors=c(0,1,5,10,20,50,100), n.repeats=3)
