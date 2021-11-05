@@ -43,8 +43,8 @@ get_value <- function( x1, x2, y1,y2, x) {
 get_roc_curve <- function(scores,labels){
   #dups = rev(duplicated(rev(scores)))
   #cutoffs = c(Inf, scores[!dups])
-  print(scores)
-  print(labels)
+  # print(scores)
+  # print(labels)
   o = order(scores, decreasing=T)
   cutoffs = c(Inf, length(scores):1)
   roc = sapply( (1:length(cutoffs)), function(i) calc_rates(scores[o], labels[o],cutoffs[i]) , simplify=F)

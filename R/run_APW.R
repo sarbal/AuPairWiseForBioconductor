@@ -33,8 +33,9 @@ run_APW <- function(exprs, out, stoich.pairs,  n.factors=c(0,1,5,10,20,50,100), 
 
   # default factors: (0,1,2,5,10,15,20,25,50,100) 30/10 SG
 
+  X <- exprs@assayData[["exprs"]]
   # Filter data
-  X = exprs
+  # X = exprs
 
   # Remove samples with no expression data
   filterout = colSums(X) != 0
@@ -50,7 +51,7 @@ run_APW <- function(exprs, out, stoich.pairs,  n.factors=c(0,1,5,10,20,50,100), 
   nS = NN               # If subsampling, currently not implemented
 
   # Visualize data so far
-  plot_cummulative_counts(out, X)
+  # plot_cummulative_counts(out, X)
 
   # Transform to log2
   Med <- median(X, na.rm = T)
@@ -68,7 +69,7 @@ run_APW <- function(exprs, out, stoich.pairs,  n.factors=c(0,1,5,10,20,50,100), 
   # Properties of expression dataset
   m.X = rowMeans(X, na.rm=T) 	# Mean expression of genes/transcripts across samples
   sd.X = apply(X,1,sd, na.rm=T)	# SD of genes/transcripts expression across samples
-  plot_expression_props(out, m.X, sd.X)
+  # plot_expression_props(out, m.X, sd.X)
 
   # Update data
   genes.list = rownames(X)
@@ -90,7 +91,7 @@ run_APW <- function(exprs, out, stoich.pairs,  n.factors=c(0,1,5,10,20,50,100), 
   k = cbind( indices$x1, indices$x2)
 
   filter = filter_pairs(pairs, indices,length)
-  plot_expression_props(out, m.X, sd.X,genes.stoich)
+  # plot_expression_props(out, m.X, sd.X,genes.stoich)
 
   # Plot correlation distributions of pairs
   # plot_stoich_cors(out, length, filter, pairs, X)

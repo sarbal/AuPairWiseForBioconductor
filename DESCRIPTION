@@ -23,4 +23,5 @@ Imports:
   zoo,
   tictoc
 Suggests:
-  RUnit
+  RUnit,
+  testthat

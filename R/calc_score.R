@@ -48,7 +48,7 @@ run_factor <- function(n.factor, n.repeats, pairs, NN, nS, X, k, nK, filter, len
   temp = matrix( unlist(repeats$aurocs), nrow=(length*2), ncol=n.repeats, byrow=T)
   rownames(temp) = array(rbind( pairs$labels, "Random") )
 
-  print(temp[i,], temp[i+1,])
+  # print(temp[i,], temp[i+1,])
 
   repeats$stats = sapply( ((1:length)*2)-1, function(i) wilcox.test( temp[i,],temp[i+1,])$p.val )
   # Write out results
