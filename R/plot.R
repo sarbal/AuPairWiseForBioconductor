@@ -1,7 +1,6 @@
 ##########################################
 plot_cummulative_counts <- function(out, X)
 {
-
   xN    = dim(X)[2]
   Xtemp = apply(X, 2, sort, decreasing=T )
   XSum  = apply(Xtemp, 2, cumsum)
@@ -24,8 +23,6 @@ plot_cummulative_counts <- function(out, X)
   abline(h=0.75,lty=3, col="lightgrey")
   abline(h=0.95,lty=2, col="lightgrey")
   dev.off()
-
-
 }
 
 ##########################################

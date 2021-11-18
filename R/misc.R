@@ -1,4 +1,5 @@
 ##########################################
+# statistical correction for residuals - reduces skew
 lm.studentized  <- function(x,y)
 {
   z = lm(y ~ x )
@@ -7,6 +8,7 @@ lm.studentized  <- function(x,y)
 }
 
 ##########################################
+# replaces any /inf values with 0
 model.fx <- function(x, fx)
 {
   x = fx(x)
