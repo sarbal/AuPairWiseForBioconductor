@@ -27,7 +27,6 @@ get_indices_stoich_pairs <- function( stoich.pairs, genes.list )
 
 # Given y and two points
 get_value_x <- function( x1, x2, y1,y2, y) {
-  if (x1 == x2) {return(NaN)}
   m = (y2 - y1) / (x2 - x1 )
   x = x1 + (y - y1)/m
   return(x)
@@ -35,7 +34,6 @@ get_value_x <- function( x1, x2, y1,y2, y) {
 
 # Given x and two points
 get_value <- function( x1, x2, y1,y2, x) {
-  if (x1 == x2) {return(NaN)}
   m = (y2 - y1) / (x2 - x1 )
   y = y1 + m *( x - x1)
   return(y)
@@ -45,8 +43,7 @@ get_value <- function( x1, x2, y1,y2, x) {
 get_roc_curve <- function(scores,labels){
   #dups = rev(duplicated(rev(scores)))
   #cutoffs = c(Inf, scores[!dups])
-  # print(scores)
-  # print(labels)
+
   o = order(scores, decreasing=T)
   cutoffs = c(Inf, length(scores):1)
   roc = sapply( (1:length(cutoffs)), function(i) calc_rates(scores[o], labels[o],cutoffs[i]) , simplify=F)
@@ -57,7 +54,7 @@ get_roc_curve <- function(scores,labels){
 
 ##########################################
 get_avgroc_curve <- function( rocs,n.repeats, n){
-  # error if n.repeats > lengths(roc)
+
   sum = matrix(0, ncol=2, nrow = n)
   colnames(sum) = c("tpr", "fpr")
   for( i in 1:n.repeats) {
@@ -78,6 +75,26 @@ get_auc <- function(x,y){
 ##########################################
 get_approx_expression <- function( temp.x, temp.x.r, temp.x.s, max.r, min.r)
 {
+  if (typeof(temp.x) != "double") {
+    stop("temp.x type is not double")
+  }
+
+  if (typeof(temp.x.r) != "integer") {
+    stop("temp.x.r type is not integer")
+  }
+
+  if (typeof(temp.x.s) != "double") {
+    stop("temp.x.s type is not double")
+  }
+
+  if (typeof(max.r) != "integer") {
+    stop("max.r type is not integer")
+  }
+
+  if (typeof(min.r) != "double") {
+    stop("min.r type is not double")
+  }
+
   if( temp.x.s < min.r ){
     x0 = 1
     x1 = 2
@@ -95,3 +112,5 @@ get_approx_expression <- function( temp.x, temp.x.r, temp.x.s, max.r, min.r)
   new.x = get_value(  x0, x1, temp.x[which( x0 ==  temp.x.r )] ,temp.x[which( x1 ==  temp.x.r )], xn)
   return (new.x)
 }
+
+

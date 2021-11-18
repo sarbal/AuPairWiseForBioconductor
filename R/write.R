@@ -15,7 +15,6 @@ write_out_summary <- function(out, results.all, length, pairs, n.factors, n.repe
     aurocs.se[,i] = aurocs.sd[,i]/sqrt(dim(data)[2])
     pvals[,i] = sapply( (1:length)*2 -1, function(j) wilcox.test(data[j,], data[j+1,], exact=FALSE)$p.val )
     i = i + 1
-
   }
 
   data = list()
