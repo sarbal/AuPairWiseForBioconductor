@@ -16,12 +16,14 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Imports: 
-  MASS,
-  Matrix,
-  scales,
-  gplots,
-  zoo,
-  tictoc
+    MASS,
+    Matrix,
+    scales,
+    gplots,
+    zoo,
+    tictoc
 Suggests:
-  RUnit,
-  testthat
+    rmarkdown,
+    knitr,
+    testthat
+VignetteBuilder: knitr
