@@ -37,7 +37,7 @@ run_factor <- function(n.factor, n.repeats, pairs, NN, nS, X, k, nK, filter, len
   print(paste("Noise factor: ", n.factor))
   shuff = sample(nS, n.repeats, replace=T)
   subS =  t(sapply( 1:n.repeats, function(i) sort(sample(NN, nS))))
-  repeats$noise = sapply((1:n.repeats), function(i) predict_sample(X[,subS[i,]], shuff[i], n.factor, k , nS, nK, filter) , simplify=F)
+  repeats$noise = sapply((1:n.repeats), function(i) predict_sample(X[,subS[i,]], shuff[i], n.factor, k, nS, nK, filter) , simplify=F)
 
   for ( j in 1:(length*2) ){
     repeats$rocs[[j]]   = sapply(1:n.repeats, function(i) get_roc_curve(repeats$noise[[i]][(1:nS)+(nS*j)] ,repeats$noise[[i]][(1:nS)+(nS*0)]), simplify=F)
