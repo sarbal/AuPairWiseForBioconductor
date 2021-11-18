@@ -1,3 +1,4 @@
+# Writes all results in output files in given path
 write_out_summary <- function(out, results.all, length, pairs, n.factors, n.repeats, AUROC.default = 0.8, nn=100){
 
   # Summary results

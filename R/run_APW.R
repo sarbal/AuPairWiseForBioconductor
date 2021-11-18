@@ -31,6 +31,7 @@
 #' @export
 run_APW <- function(exprs, out, stoich.pairs,  n.factors=c(0,1,5,10,20,50,100), n.repeats=10, dist ="other", mode ="post" , ranked=FALSE, labels.default="Stoichiometric pairs" ){
 
+
   # default factors: (0,1,2,5,10,15,20,25,50,100) 30/10 SG
 
   X <- exprs@assayData[["exprs"]]
