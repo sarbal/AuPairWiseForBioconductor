@@ -91,7 +91,7 @@ run_APW <- function(exprs, out, stoich.pairs,  n.factors=c(0,1,5,10,20,50,100), 
   k = cbind( indices$x1, indices$x2)
 
   filter = filter_pairs(pairs, indices,length)
-  # plot_expression_props(out, m.X, sd.X,genes.stoich)
+  plot_expression_props(out, m.X, sd.X,genes.stoich)
 
   # Plot correlation distributions of pairs
   # plot_stoich_cors(out, length, filter, pairs, X)
