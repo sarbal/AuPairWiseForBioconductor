@@ -27,6 +27,7 @@ get_indices_stoich_pairs <- function( stoich.pairs, genes.list )
 
 # Given y and two points
 get_value_x <- function( x1, x2, y1,y2, y) {
+  if (x1 == x2) {return(NaN)}
   m = (y2 - y1) / (x2 - x1 )
   x = x1 + (y - y1)/m
   return(x)
@@ -34,6 +35,7 @@ get_value_x <- function( x1, x2, y1,y2, y) {
 
 # Given x and two points
 get_value <- function( x1, x2, y1,y2, x) {
+  if (x1 == x2) {return(NaN)}
   m = (y2 - y1) / (x2 - x1 )
   y = y1 + m *( x - x1)
   return(y)
@@ -55,7 +57,7 @@ get_roc_curve <- function(scores,labels){
 
 ##########################################
 get_avgroc_curve <- function( rocs,n.repeats, n){
-
+  # error if n.repeats > lengths(roc)
   sum = matrix(0, ncol=2, nrow = n)
   colnames(sum) = c("tpr", "fpr")
   for( i in 1:n.repeats) {
