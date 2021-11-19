@@ -58,7 +58,7 @@ plot_summary_results <- function(data, out, AUROC.default=0.8){
   plot( log10(data$n.factors), data$aurocs[1,], ylim=c(0.4,1), type="l", lwd=3, col=0, xlab="Noise factor", ylab="AUROC", axes=F)
   axis(2)
   axis(1, lab=data$n.factors, at=log10(data$n.factors) )
-  cols = makeTransparent(colorpanel(n, "black", "lightgrey"),150)
+  cols = makeTransparent(gplots::colorpanel(n, "black", "lightgrey"),150)
 
   for( i in 1:n){
     lines( log10(data$n.factors), data$aurocs[i,], lwd=3, col=cols[i])

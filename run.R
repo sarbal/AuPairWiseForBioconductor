@@ -16,5 +16,3 @@ out = paste(masterdir,"/Output/results",sep="")
 
 # generate an expression set with sample data
 summary = run_APW(sampleBrainspanExpressionSet, out, samplePairs, n.factors=c(0,5,20,100), n.repeats=2)
-
-

@@ -28,7 +28,6 @@ write_out_summary <- function(out, results.all, length, pairs, n.factors, n.repe
   write.table (data$aurocs.sd, file = paste(out,".avg.aurocs.summary", sep=""), append=T, col.names=F, row.names=paste(array(rbind( pairs$labels, "Random") ), "- SD"))
   write.table (data$aurocs.se, file = paste(out,".avg.aurocs.summary", sep=""), append=T, col.names=F, row.names=paste(array(rbind( pairs$labels, "Random") ), "- SE"))
 
-
   # Predictions
   stats = matrix(NA, ncol=nn, nrow=length*2, dimnames=list( array(rbind( pairs$labels, "Random"), 1:nn /nn )))
   range = n.factors[-1]

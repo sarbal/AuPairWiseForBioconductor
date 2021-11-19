@@ -39,7 +39,7 @@ run_APW <- function(exprs, out, stoich.pairs,  n.factors=c(0,1,5,10,20,50,100), 
     stop("ERROR: expression data is in the wrong format")
   }
 
-  if (missing(stoich.pairs) or is.null(stoich.pairs)) {
+  if (missing(stoich.pairs) || is.null(stoich.pairs)) {
     stop("ERROR: stoich pairs is empty or missing")
   }
 
@@ -55,16 +55,8 @@ run_APW <- function(exprs, out, stoich.pairs,  n.factors=c(0,1,5,10,20,50,100), 
     stop("ERROR: n.repeats need to greater than or equal to 1")
   }
 
-  if (out == "" || !dir.exists(out) ) {
-    warning("WARNING: output path does not exist, outputting all results to current working dir")
-    out = getwd()
-  }
-
-  # default factors: (0,1,2,5,10,15,20,25,50,100) 30/10 SG
-
   X <- exprs@assayData[["exprs"]]
   # Filter data
-  # X = exprs
 
   # Remove samples with no expression data
   filterout = colSums(X) != 0
@@ -78,9 +70,6 @@ run_APW <- function(exprs, out, stoich.pairs,  n.factors=c(0,1,5,10,20,50,100), 
   N = dim(X)[1]     		# Number of genes/transcripts
   S = 1:NN          		# Indices for samples
   nS = NN               # If subsampling, currently not implemented
-
-  # Visualize data so far
-  # plot_cummulative_counts(out, X)
 
   # Transform to log2
   Med <- median(X, na.rm = T)
@@ -98,7 +87,6 @@ run_APW <- function(exprs, out, stoich.pairs,  n.factors=c(0,1,5,10,20,50,100), 
   # Properties of expression dataset
   m.X = rowMeans(X, na.rm=T) 	# Mean expression of genes/transcripts across samples
   sd.X = apply(X,1,sd, na.rm=T)	# SD of genes/transcripts expression across samples
-  # plot_expression_props(out, m.X, sd.X)
 
   # Update data
   genes.list = rownames(X)
@@ -122,20 +110,16 @@ run_APW <- function(exprs, out, stoich.pairs,  n.factors=c(0,1,5,10,20,50,100), 
   filter = filter_pairs(pairs, indices,length)
   plot_expression_props(out, m.X, sd.X,genes.stoich)
 
-  # Plot correlation distributions of pairs
-  # plot_stoich_cors(out, length, filter, pairs, X)
-
   # Calculate AUROCs for each noise factor, using each pair set
-  # results.all = calc_auroc(n.factors, n.repeats, pairs, NN, nS, X, k, nK, filter, length)
   results.all = list()
   r = 1
   for (n.factor in n.factors) {
-    results.all[[r]]= run_factor(n.factor, n.repeats, pairs, NN, nS, X, k, nK, filter, length)
+    results.all[[r]]= suppressWarnings(run_factor(n.factor, n.repeats, pairs, NN, nS, X, k, nK, filter, length))
     r = r + 1
   }
 
   # Summary results
-  summary = write_out_summary(out, results.all, length, pairs, n.factors, n.repeats)
+  summary = suppressWarnings(write_out_summary(out, results.all, length, pairs, n.factors, n.repeats))
   return( summary )
 }
 
