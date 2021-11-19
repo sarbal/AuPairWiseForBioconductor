@@ -52,7 +52,8 @@ write_out_summary <- function(out, results.all, length, pairs, n.factors, n.repe
 
   data$stats = stats
   # write.table (data$stats, file = paste(out,".avg.aurocs.predictions", sep="")  )
-
+  plot_summary_results(data, out)
   save(data, results.all, file=paste(out,".avg.aurocs.Rdata", sep="") )
+
   return(data)
 }

@@ -42,3 +42,37 @@ plot_expression_props <- function( out, m.X, sd.X, genes.stoich)
   dev.off()
 
 }
+
+
+
+########################################
+plot_summary_results <- function(data, out, AUROC.default=0.8){
+  if( !missing(out) ){
+    png( paste(out, ".predictions.png", sep="")  )
+  }
+
+  col.def = which(colnames(data$stats)==AUROC.default)
+
+  n = dim(data$aurocs)[1]
+
+  plot( log10(data$n.factors), data$aurocs[1,], ylim=c(0.4,1), type="l", lwd=3, col=0, xlab="Noise factor", ylab="AUROC", axes=F)
+  axis(2)
+  axis(1, lab=data$n.factors, at=log10(data$n.factors) )
+  cols = makeTransparent(colorpanel(n, "black", "lightgrey"),150)
+
+  for( i in 1:n){
+    lines( log10(data$n.factors), data$aurocs[i,], lwd=3, col=cols[i])
+    segments(log10(data$n.factors), data$aurocs[i,]-data$aurocs.se[i,], log10(data$n.factors),data$aurocs[i,]+data$aurocs.se[i,],col=cols[i])
+    points( log10(data$n.factors), data$aurocs[i,], pch=19,col=cols[i])
+  }
+
+  abline( h = AUROC.default, lwd=3, lty=3, col=2)
+  abline( v = log10(data$stats[1,col.def]), lwd=3, lty=3, col=2)
+  text(log10(max(data$n.factors)/2), 0.5, paste("For an AUROC of:", AUROC.default, "\nthe estimated noise factor is:\n", round(data$stats[1,col.def],1), "%") )
+  legend("topleft", legend=rownames(data$aurocs), col=cols, lwd=3, pch=19)
+
+  if( !missing(out) ){
+    dev.off()
+  }
+}
+
