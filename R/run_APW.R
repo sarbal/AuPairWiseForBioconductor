@@ -31,6 +31,34 @@
 #' @export
 run_APW <- function(exprs, out, stoich.pairs,  n.factors=c(0,1,5,10,20,50,100), n.repeats=10, dist ="other", mode ="post" , ranked=FALSE, labels.default="Stoichiometric pairs" ){
 
+  if (missing(exprs) || is.null(exprs) || is.null(exprs@assayData[["exprs"]])) {
+    stop("ERROR: expression matrix is empty or missing")
+  }
+
+  if (typeof(exprs) != "S4" || typeof(exprs@assayData[["exprs"]]) != "double") {
+    stop("ERROR: expression data is in the wrong format")
+  }
+
+  if (missing(stoich.pairs) or is.null(stoich.pairs)) {
+    stop("ERROR: stoich pairs is empty or missing")
+  }
+
+  if (!is.vector(n.factors)){
+    stop("ERROR: n.factors need to be in vector form")
+  }
+
+  if (length(n.factors) < 2) {
+    stop("ERROR: n.factors need to be have more than 1 factor")
+  }
+
+  if(n.repeats < 1) {
+    stop("ERROR: n.repeats need to greater than or equal to 1")
+  }
+
+  if (out == "" || !dir.exists(out) ) {
+    warning("WARNING: output path does not exist, outputting all results to current working dir")
+    out = getwd()
+  }
 
   # default factors: (0,1,2,5,10,15,20,25,50,100) 30/10 SG
 
@@ -108,7 +136,6 @@ run_APW <- function(exprs, out, stoich.pairs,  n.factors=c(0,1,5,10,20,50,100), 
 
   # Summary results
   summary = write_out_summary(out, results.all, length, pairs, n.factors, n.repeats)
-
   return( summary )
 }
 
