@@ -1,8 +1,12 @@
 library(testthat)
 
 test_that("Testing filter_pairs function", {
+  data("samplePairs")
+  data("sampleBrainspanExpressionSet")
+  X <- sampleBrainspanExpressionSet@assayData[["exprs"]]
+  genes.list = rownames(X)
   pairs = list()
-  pairs$stoich = all_pairs(stoich.pairs)
+  pairs$stoich = all_pairs(samplePairs)
   pairs$all    = unique_all_pairs( pairs )
   pairs$labels = labels.default
   length       = length(pairs$labels)

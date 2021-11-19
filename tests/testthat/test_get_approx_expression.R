@@ -1,14 +1,8 @@
 library(testthat)
 
-test_that("Testing get_approx_expression function", {
-  expect_silent(get_approx_expression(0,0,0,0,0))
-  expect_true(is.atomic(get_approx_expression(0,0,0,0,0)))
-  expect_true(is.double(get_approx_expression(0,0,1,1,1)))
-
-})
-
 test_that("get_approx_expression works", {
-  X <- ExpressionSet(assayData=exprs)@assayData[["exprs"]]
+  data("sampleBrainspanExpressionSet")
+  X <- sampleBrainspanExpressionSet@assayData[["exprs"]]
 
   nX1 = dim(X)[1]
   nS1 = dim(X)[2]
