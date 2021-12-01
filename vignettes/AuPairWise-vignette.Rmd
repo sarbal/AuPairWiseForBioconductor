@@ -47,7 +47,7 @@ There are three required arguments to `runAPW()`:
 
 1. A BioBase ExpressionSet object. Refer to https://www.bioconductor.org/packages/devel/bioc/vignettes/Biobase/inst/doc/ExpressionSetIntroduction.pdf for help understanding this object.
 1. A path to a directory used for results
-1. A list of pairs of genes that are known to be co-expressed, labelled by their entrez gene IDs. Use either a custom set, or the stoich.pairs set found in `AuPairWise/SampleData/pairs.Rdata`.
+1. A list of pairs of genes that are known to be co-expressed, labelled by their entrez gene IDs. Use either a custom set, or the ```samplePairs``` set found in this package. 
 
 Below is a typical workflow that will get you started with AuPairWise. This workflow uses two in-built sample datasets in the AuPairWise package:
 
@@ -84,6 +84,44 @@ summary = run_APW(sampleBrainspanExpressionSet, out, samplePairs, n.factors=c(0,
 This code may be used to generate a snapshot of the data in a short time. However, a reliable evaluation should cover at minimum all default noise factors and use at least 10 repeats.
 
 
+## Interpreting the output
+
+### Results:
+The output of the ``` run_APW()``` function is a list that contains 6 elements. Here, we've named it summary.
+The first element is a table with the average AUROCs for the noise factors that the model ran: ``` summary$aurocs ```
+The first row of this table has the stoichiometric pair results, and the second row has the random pairs run.
+The next two lists are the statistics for the above AUROCs (standard deviation and standard error): ``` summary$aurocs.sd ```  and ``` summary$aurocs.se```
+The noise factors tested are listed in ```summary$n.factors```. These are the default values, and can 
+be set in the ```run_APW()``` function, eg. ``` run_APW(sampleBrainspanExpressionSet, out, samplepairs, n.factors=c(0,10,50) )```
+The p-valaue of the Wilcoxon rank sum test between the stoichiometric pairs and the random pairs for each noise factor are in ```summary$pvals```
+And finally, the estimated noise factors for any AUROC is given in: ``` summary$stats```
+
+|AUROCs|0|1|2|5|10|15|20|25|50|100|
+|---|---|---|---|---|---|---|---|---|---|---|
+|Stoichiometric pairs|0.59|0.59|0.54|0.58|0.82|0.90|0.99|0.99|1.00|1.00|
+|Random|0.59|0.49|0.55|0.59|0.74|0.79|0.88|0.95|1.00|1.00|
+
+
+|P-values|0|1|2|5|10|15|20|25|50|100|
+|---|---|---|---|---|---|---|---|---|---|---|
+|Ranksum test|0.9096|0.2242|1.0000|0.9698|0.1381|0.0598|0.0025|0.0246|NaN|NaN|
+
+### Visualizing results:
+You can view the summary results with the ``` plot_summary_results(summary)``` function.
+
+![Sample output](https://github.com/sarbal/AuPairWise/blob/master/suppl/imgs/summary_encode.png "Sample output")
+ 
+### Intepreting results
+A low noise factor implies that your experiment 'replicates' the coexpression patterns expected well
+enough to be detected by small perturbations.
+However, this should also be compared to the performances given by the random pairs.
+
+### Extras 
+To run on a different list of gene pairs, modify the ```samplePairs``` variable.
+This a matrix of gene pairs, the first column has gene A and second column gene B.
+These need to be entrez gene IDs, or must match the gene labels of your expresssion dataset.
+
+You can also combine multiple runs, but this requires some careful labelling of your output files. 
 
 
 
